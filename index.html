@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tourist Maps</title>
+
+  <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: url('https://github.com/Bragatur/mapas/raw/39e026855646233060a2b17a2591801a9e9b1ce7/Canudo_Bom%20Jesus_01.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    main {
+      max-width: 500px;
+      padding: 30px 20px;
+      border-radius: 20px;
+      text-align: center;
+    }
+    .lang-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+    .lang-buttons button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+    }
+    .lang-buttons img {
+      width: 32px;
+      height: auto;
+      border-radius: 5px;
+      transition: transform 0.2s;
+    }
+    .lang-buttons img:hover {
+      transform: scale(1.1);
+    }
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2em;
+    }
+    p {
+      margin-bottom: 30px;
+      font-size: 1.1em;
+    }
+    .download-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    .link-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      width: 100%;
+      max-width: 300px;
+      border: none;
+      border-radius: 30px;
+      background-color: #2575fc;
+      color: white;
+      font-size: 1em;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+    }
+    .link-button:hover {
+      background-color: #1a5bbf;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+    .link-button i {
+      font-size: 18px;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #ccc;
+    }
+    @media (max-width: 600px) {
+      main {
+        padding: 20px 10px;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+      p {
+        font-size: 1em;
+      }
+      .link-button {
+        font-size: 0.95em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <main>
+      <div class="lang-buttons">
+        <button onclick="setLanguage('pt')" title="Português" aria-label="Selecionar idioma Português">
+          <img src="https://flagcdn.com/w40/pt.png" alt="Bandeira de Portugal - selecionar idioma Português" />
+        </button>
+        <button onclick="setLanguage('es')" title="Español" aria-label="Seleccionar idioma Español">
+          <img src="https://flagcdn.com/w40/es.png" alt="Bandera de España - seleccionar idioma Español" />
+        </button>
+        <button onclick="setLanguage('en')" title="English" aria-label="Select English language">
+          <img src="https://flagcdn.com/w40/gb.png" alt="UK Flag - select English language" />
+        </button>
+        <button onclick="setLanguage('fr')" title="Français" aria-label="Choisir la langue française">
+          <img src="https://flagcdn.com/w40/fr.png" alt="Drapeau de la France - sélectionner langue française" />
+        </button>
+      </div>
+
+      <h1 id="title">Discover Braga in 3 Days</h1>
+      <p id="description">Download the tourist guide in your language:</p>
+
+      <div class="download-buttons">
+        <a id="btn-map-braga" class="link-button" href="https://github.com/Bragatur/mapas/raw/68d8e29a157f1236e0f8eae90a03d1c1d2f38260/mapaBraga_01-2025-compressed.pdf" target="_blank" rel="noopener noreferrer">
+          <i class="lni lni-download"></i> Mapa Turístico de Braga
+        </a>
+        <a id="btn-map-norte" class="link-button" href="https://github.com/Bragatur/mapas/raw/68d8e29a157f1236e0f8eae90a03d1c1d2f38260/mapaTPNP_68x48_janeiro2025%20(1).jpg" target="_blank" rel="noopener noreferrer">
+          <i class="lni lni-download"></i> Mapa da Região Norte de Portugal
+        </a>
+      </div>
+
+      <div class="footer">
+        © Município de Braga
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const texts = {
+      pt: {
+        title: "Mapas Turísticos",
+        description: "Descarrega aqui os mapas pretendidos:",
+        buttons: {
+          mapBraga: "Mapa Turístico de Braga",
+          mapNorte: "Mapa da Região Norte de Portugal"
+        }
+      },
+      es: {
+        title: "Mapas Turísticos",
+        description: "Descarga aquí los mapas deseados:",
+        buttons: {
+          mapBraga: "Mapa Turístico de Braga",
+          mapNorte: "Mapa de la Región Norte de Portugal"
+        }
+      },
+      en: {
+        title: "Tourist Maps",
+        description: "Download the desired maps here:",
+        buttons: {
+          mapBraga: "Tourist Map of Braga",
+          mapNorte: "Map of Northern Portugal Region"
+        }
+      },
+      fr: {
+        title: "Cartes Touristiques",
+        description: "Téléchargez ici les cartes souhaitées :",
+        buttons: {
+          mapBraga: "Carte Touristique de Braga",
+          mapNorte: "Carte de la Région Nord du Portugal"
+        }
+      }
+    };
+
+    function setLanguage(lang) {
+      const content = texts[lang];
+      document.getElementById("title").innerText = content.title;
+      document.getElementById("description").innerText = content.description;
+      document.documentElement.lang = lang;
+      document.title = content.title;
+
+      // Atualiza os textos dos botões
+      document.getElementById("btn-map-braga").innerHTML = `<i class="lni lni-download"></i> ${content.buttons.mapBraga}`;
+      document.getElementById("btn-map-norte").innerHTML = `<i class="lni lni-download"></i> ${content.buttons.mapNorte}`;
+    }
+
+    const supportedLanguages = ["pt", "es", "en", "fr"];
+    let browserLang = navigator.language.toLowerCase().split("-")[0];
+    if (!supportedLanguages.includes(browserLang)) browserLang = "en";
+    setLanguage(browserLang);
+  </script>
+</body>
+</html>
