@@ -50,14 +50,24 @@
       border: none;
       padding: 0;
       cursor: pointer;
+      width: 50px;       /* aumentado */
+      height: 35px;      /* aumentado */
+      border-radius: 5px;
+      transition: transform 0.2s;
+    }
+
+    .lang-buttons button.selected {
+      box-shadow: 0 0 0 2px white;
+      transform: scale(1.15);
     }
 
     .lang-buttons img {
-      width: 40px;
-      height: 28px;
-      border-radius: 5px;
-      transition: transform 0.2s;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
+      border-radius: 5px;
+      pointer-events: none;
+      user-select: none;
     }
 
     .lang-buttons img:hover {
@@ -130,6 +140,10 @@
       .link-button {
         font-size: 0.95em;
       }
+      .lang-buttons button {
+        width: 40px;
+        height: 28px;
+      }
     }
   </style>
 </head>
@@ -137,24 +151,36 @@
   <div class="overlay">
     <main>
       <div class="lang-buttons">
-        <button onclick="setLanguage('pt')" title="Português"><img src="https://flagcdn.com/pt.svg" alt="Português" /></button>
-        <button onclick="setLanguage('es')" title="Español"><img src="https://flagcdn.com/es.svg" alt="Español" /></button>
-        <button onclick="setLanguage('en')" title="English"><img src="https://flagcdn.com/gb.svg" alt="English" /></button>
-        <button onclick="setLanguage('fr')" title="Français"><img src="https://flagcdn.com/fr.svg" alt="Français" /></button>
+        <button onclick="setLanguage('pt')" title="Português" aria-label="Selecionar idioma Português">
+          <img src="https://flagcdn.com/pt.svg" alt="Português" />
+        </button>
+        <button onclick="setLanguage('es')" title="Español" aria-label="Seleccionar idioma Español">
+          <img src="https://flagcdn.com/es.svg" alt="Español" />
+        </button>
+        <button onclick="setLanguage('en')" title="English" aria-label="Select English language">
+          <img src="https://flagcdn.com/gb.svg" alt="English" />
+        </button>
+        <button onclick="setLanguage('fr')" title="Français" aria-label="Choisir la langue française">
+          <img src="https://flagcdn.com/fr.svg" alt="Français" />
+        </button>
       </div>
+
       <h1 id="title">Discover Braga in 3 Days</h1>
       <p id="description">Download the tourist guide in your language:</p>
+
       <div class="download-buttons">
-        <a id="btn-map-braga" class="link-button" href="https://github.com/Bragatur/mapas/raw/68d8e29a157f1236e0f8eae90a03d1c1d2f38260/mapaBraga_01-2025-compressed.pdf" target="_blank">
+        <a id="btn-map-braga" class="link-button" href="https://github.com/Bragatur/mapas/raw/68d8e29a157f1236e0f8eae90a03d1c1d2f38260/mapaBraga_01-2025-compressed.pdf" target="_blank" rel="noopener noreferrer">
           <i class="lni lni-download"></i> Mapa Turístico de Braga
         </a>
-        <a id="btn-map-norte" class="link-button" href="https://github.com/Bragatur/mapas/raw/68d8e29a157f1236e0f8eae90a03d1c1d2f38260/mapaTPNP_68x48_janeiro2025%20(1).jpg" target="_blank">
+        <a id="btn-map-norte" class="link-button" href="https://github.com/Bragatur/mapas/raw/68d8e29a157f1236e0f8eae90a03d1c1d2f38260/mapaTPNP_68x48_janeiro2025%20(1).jpg" target="_blank" rel="noopener noreferrer">
           <i class="lni lni-download"></i> Mapa da Região Norte de Portugal
         </a>
       </div>
+
       <div class="footer">© Município de Braga</div>
     </main>
   </div>
+
   <script>
     const texts = {
       pt: {
@@ -199,6 +225,14 @@
       document.title = content.title;
       document.getElementById("btn-map-braga").innerHTML = `<i class="lni lni-download"></i> ${content.buttons.mapBraga}`;
       document.getElementById("btn-map-norte").innerHTML = `<i class="lni lni-download"></i> ${content.buttons.mapNorte}`;
+
+      // Remove destaque de todos os botões
+      document.querySelectorAll('.lang-buttons button').forEach(btn => btn.classList.remove('selected'));
+
+      // Adiciona destaque ao botão do idioma selecionado
+      const selectedBtn = [...document.querySelectorAll('.lang-buttons button')]
+        .find(btn => btn.getAttribute('onclick').includes(`'${lang}'`));
+      if (selectedBtn) selectedBtn.classList.add('selected');
     }
 
     (function fallbackToBrowserLang() {
