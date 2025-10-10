@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tourist Maps</title>
+  <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Segoe UI", sans-serif;
+      background: url('https://raw.githubusercontent.com/Bragatur/mapas/refs/heads/main/Mockup%20mapas.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    main {
+      max-width: 500px;
+      width: 100%;
+      padding: 30px 20px;
+      border-radius: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 2em;
+      line-height: 1.2;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    p {
+      margin: 0 0 30px 0;
+      font-size: 1.1em;
+      line-height: 1.4;
+      max-width: 100%;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+    }
+
+    .download-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 30px;
+      width: 100%;
+    }
+
+    .link-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 20px;
+      width: 100%;
+      max-width: 300px;
+      border: none;
+      border-radius: 30px;
+      background-color: #2575fc;
+      color: white;
+      font-size: 1em;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .link-button:hover,
+    .link-button:focus {
+      background-color: #1a5bbf;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      outline: none;
+    }
+
+    .footer {
+      font-size: 0.9em;
+      color: #ccc;
+      user-select: none;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Botão flutuante de idiomas com legenda horizontal */
+    .lang-dropdown {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: floatIn 0.8s ease forwards 1.2s;
+    }
+
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lang-label {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 12px;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+      user-select: none;
+      text-align: center;
+      transition: opacity 0.3s;
+      white-space: nowrap;
+    }
+
+    .lang-main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lang-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: #2575fc;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .lang-icon:hover {
+      transform: scale(1.1);
+      background-color: #1a5bbf;
+    }
+
+    .lang-options {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .lang-options.show {
+      display: flex;
+      animation: fadeSlide 0.4s ease forwards;
+    }
+
+    .lang-options .lang-icon {
+      width: 38px;
+      height: 38px;
+      font-size: 0.8rem;
+      background-color: #555;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: optionPop 0.35s ease forwards;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes optionPop {
+      0% { opacity: 0; transform: translateY(10px) scale(0.8); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .lang-options.show .lang-icon:nth-child(n) {
+      animation-delay: calc(0.05s * var(--i));
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <main>
+      <h1 id="title">Tourist Maps</h1>
+      <p id="description">Download the desired maps here:</p>
+
+      <div class="download-buttons">
+        <a id="btn-map-braga" class="link-button" href="https://github.com/Bragatur/mapas/raw/68d8e29a157f1236e0f8eae90a03d1c1d2f38260/mapaBraga_01-2025-compressed.pdf" target="_blank" rel="noopener noreferrer">
+          <i class="lni lni-download"></i> Tourist Map of Braga
+        </a>
+        <a id="btn-map-norte" class="link-button" href="https://github.com/Bragatur/mapas/raw/68d8e29a157f1236e0f8eae90a03d1c1d2f38260/mapaTPNP_68x48_janeiro2025%20(1).jpg" target="_blank" rel="noopener noreferrer">
+          <i class="lni lni-download"></i> Map of Northern Portugal Region
+        </a>
+      </div>
+
+      <div class="footer">© Município de Braga</div>
+    </main>
+  </div>
+
+  <div class="lang-dropdown">
+    <div class="lang-main">
+      <div id="current-lang" class="lang-icon">EN</div>
+    </div>
+    <div class="lang-options"></div>
+    <span class="lang-label" id="lang-label">Change language</span>
+  </div>
+
+  <script>
+    const texts = {
+      pt: {
+        title: "Mapas Turísticos",
+        description: "Descarrega aqui os mapas pretendidos:",
+        buttons: {
+          mapBraga: "Mapa Turístico de Braga",
+          mapNorte: "Mapa da Região Norte de Portugal"
+        },
+        langLabel: "Alterar idioma"
+      },
+      es: {
+        title: "Mapas Turísticos",
+        description: "Descarga aquí los mapas deseados:",
+        buttons: {
+          mapBraga: "Mapa Turístico de Braga",
+          mapNorte: "Mapa de la Región Norte de Portugal"
+        },
+        langLabel: "Cambiar idioma"
+      },
+      en: {
+        title: "Tourist Maps",
+        description: "Download the desired maps here:",
+        buttons: {
+          mapBraga: "Tourist Map of Braga",
+          mapNorte: "Map of Northern Portugal Region"
+        },
+        langLabel: "Change language"
+      },
+      fr: {
+        title: "Cartes Touristiques",
+        description: "Téléchargez ici les cartes souhaitées :",
+        buttons: {
+          mapBraga: "Carte Touristique de Braga",
+          mapNorte: "Carte de la Région Nord du Portugal"
+        },
+        langLabel: "Changer de langue"
+      },
+      it: {
+        title: "Mappe Turistiche",
+        description: "Scarica qui le mappe desiderate:",
+        buttons: {
+          mapBraga: "Mappa Turistica di Braga",
+          mapNorte: "Mappa della Regione Nord del Portogallo"
+        },
+        langLabel: "Cambia lingua"
+      },
+      de: {
+        title: "Touristische Karten",
+        description: "Laden Sie hier die gewünschten Karten herunter:",
+        buttons: {
+          mapBraga: "Touristische Karte von Braga",
+          mapNorte: "Karte der Region Nordportugal"
+        },
+        langLabel: "Sprache ändern"
+      },
+      pl: {
+        title: "Mapy Turystyczne",
+        description: "Pobierz tutaj wybrane mapy:",
+        buttons: {
+          mapBraga: "Mapa Turystyczna Bragi",
+          mapNorte: "Mapa Regionu Północnego Portugalii"
+        },
+        langLabel: "Zmień język"
+      },
+      zh: {
+        title: "旅游地图",
+        description: "在此下载所需地图：",
+        buttons: {
+          mapBraga: "布拉加旅游地图",
+          mapNorte: "葡萄牙北部地区地图"
+        },
+        langLabel: "更改语言"
+      },
+      ja: {
+        title: "観光マップ",
+        description: "ここで必要なマップをダウンロードしてください：",
+        buttons: {
+          mapBraga: "ブラガ観光マップ",
+          mapNorte: "ポルトガル北部地域マップ"
+        },
+        langLabel: "言語を変更"
+      },
+      ru: {
+        title: "Туристические Карты",
+        description: "Скачайте здесь необходимые карты:",
+        buttons: {
+          mapBraga: "Туристическая Карта Браги",
+          mapNorte: "Карта Северного Региона Португалии"
+        },
+        langLabel: "Сменить язык"
+      },
+      nl: {
+        title: "Toeristische Kaarten",
+        description: "Download hier de gewenste kaarten:",
+        buttons: {
+          mapBraga: "Toeristische Kaart van Braga",
+          mapNorte: "Kaart van de Regio Noord-Portugal"
+        },
+        langLabel: "Taal wijzigen"
+      }
+    };
+
+    const flagMap = { pt: 'PT', es: 'ES', en: 'EN', fr: 'FR', it: 'IT', de: 'DE', pl: 'PL', zh: '中文', ja: '日', ru: 'RU', nl: 'NL' };
+    const dropdown = document.querySelector('.lang-dropdown');
+    const currentLang = document.getElementById('current-lang');
+    const options = dropdown.querySelector('.lang-options');
+    const langLabel = document.getElementById('lang-label');
+
+    function renderDropdown(current) {
+      options.innerHTML = '';
+      let i = 1;
+      for (let lang in flagMap) {
+        if (lang !== current) {
+          const div = document.createElement('div');
+          div.className = 'lang-icon';
+          div.textContent = flagMap[lang];
+          div.style.setProperty('--i', i++);
+          div.onclick = () => setLanguage(lang);
+          options.appendChild(div);
+        }
+      }
+    }
+
+    currentLang.addEventListener('click', () => { options.classList.toggle('show'); });
+
+    function setLanguage(lang) {
+      const content = texts[lang] || texts['en'];
+
+      document.getElementById("title").textContent = content.title;
+      document.getElementById("description").textContent = content.description;
+      document.documentElement.lang = lang;
+      document.title = content.title;
+      
+      document.getElementById("btn-map-braga").innerHTML = `<i class="lni lni-download"></i> ${content.buttons.mapBraga}`;
+      document.getElementById("btn-map-norte").innerHTML = `<i class="lni lni-download"></i> ${content.buttons.mapNorte}`;
+
+      langLabel.textContent = content.langLabel;
+      currentLang.textContent = flagMap[lang];
+      renderDropdown(lang);
+      options.classList.remove('show');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const userLang = navigator.language.slice(0,2);
+      const supported = Object.keys(texts);
+      const lang = supported.includes(userLang) ? userLang : 'en';
+      setLanguage(lang);
+    });
+  </script>
+</body>
+</html>
