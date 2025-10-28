@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mapas e Roteiros de Braga</title>
+  
+  <link rel="preload" as="image" href="https://github.com/Bragatur/roteiros/blob/main/DSC0566.jpg?raw=true">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
+  
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Segoe UI", sans-serif;
+      background: url('https://github.com/Bragatur/roteiros/blob/main/DSC0566.jpg?raw=true') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(3px);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+
+    main {
+      max-width: 500px;
+      width: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2em;
+      text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+    }
+
+    h2 {
+      font-size: 1em;
+      font-weight: normal;
+      color: #ddd;
+      margin-bottom: 25px;
+      line-height: 1.4;
+    }
+
+    /* ESTILO UNIFICADO para todos os botões */
+    .link-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+      padding: 12px 18px; /* Tamanho padrão */
+      margin: 8px 0;
+      width: 100%;
+      max-width: 280px;
+      border-radius: 25px;
+      background-color: #2575fc; /* Cor azul unificada */
+      color: #fff;
+      font-weight: bold;
+      text-decoration: none;
+      font-size: 0.95em;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    .link-button i {
+      font-size: 1em;
+    }
+
+    .link-button:hover {
+      background-color: #1a5bbf;
+      transform: translateY(-2px);
+    }
+
+    .footer {
+      margin-top: 25px;
+      font-size: 0.85em;
+      color: #ddd;
+    }
+
+    /* Botão flutuante de idiomas */
+    .lang-dropdown {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: floatIn 0.8s ease forwards 1.2s;
+    }
+
+    @keyframes floatIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lang-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: #2575fc;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .lang-icon:hover {
+      transform: scale(1.1);
+      background-color: #1a5bbf;
+    }
+
+    .lang-options {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .lang-options.show {
+      display: flex;
+    }
+
+    .lang-label {
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 12px;
+      margin-top: 8px;
+      user-select: none;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.6em; }
+      h2 { font-size: 0.9em; }
+      .link-button { 
+          font-size: 0.9em; 
+          padding: 10px 14px; 
+          max-width: 260px; 
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <main>
+      <h1 id="title">Mapas e Roteiros de Braga</h1>
+      <h2 id="subtitle">Escolha um tema abaixo para ver os detalhes e links de download.</h2>
+      
+      <a id="mapas" href="https://bragatur.github.io/mapas/" class="link-button" target="_blank"><i class="fa-solid fa-map"></i> Mapa Turístico de Braga</a>
+
+      <a id="barroco" href="https://bragatur.github.io/roteiro_barroco_braga/" class="link-button" target="_blank"><i class="fa-solid fa-landmark"></i> Roteiro do Barroco</a>
+      <a id="descobrir" href="https://bragatur.github.io/roteiros/" class="link-button" target="_blank"><i class="fa-solid fa-route"></i> Descobrir Braga em 3 Dias</a>
+      <a id="infantil" href="https://visitbraga.travel/wp-content/uploads/2025/07/Roteiro-Infantil-CMB-Visit-Braga.pdf" class="link-button" target="_blank"><i class="fa-solid fa-child"></i> Roteiro Infantil</a>
+      <a id="afterdark" href="https://visitbraga.travel/wp-content/uploads/2025/06/Roteiro-Braga-After-Dark.pdf" class="link-button" target="_blank"><i class="fa-solid fa-moon"></i> Braga After Dark</a>
+      
+      <div class="footer" id="footer">© Município de Braga</div>
+    </main>
+  </div>
+
+  <div class="lang-dropdown">
+    <div id="current-lang" class="lang-icon">PT</div>
+    <div class="lang-options" id="lang-options"></div>
+    <span class="lang-label" id="lang-label">Idioma / Language</span>
+  </div>
+
+  <script>
+    const translations = {
+      pt: { 
+        title: "Mapas e Roteiros de Braga", 
+        subtitle: "Escolha um tema abaixo para ver os detalhes e links de download.", 
+        barroco: "Roteiro do Barroco", 
+        descobrir: "Descobrir Braga em 3 Dias", 
+        infantil: "Roteiro Infantil", 
+        afterdark: "Braga After Dark", 
+        mapas: "Mapa Turístico de Braga", 
+        label: "Idioma / Language", 
+        footer: "© Município de Braga" 
+      },
+      en: { 
+        title: "Braga Maps and Routes", 
+        subtitle: "Select a theme below to view details and download links.", 
+        barroco: "Baroque Route", 
+        descobrir: "Discover Braga in 3 Days", 
+        infantil: "Children's Route", 
+        afterdark: "Braga After Dark", 
+        mapas: "Braga Tourist Map", 
+        label: "Language", 
+        footer: "© City of Braga" 
+      },
+      es: { 
+        title: "Mapas y Rutas de Braga", 
+        subtitle: "Elija un tema a continuación para ver los detalles y enlaces de descarga.", 
+        barroco: "Ruta del Barroco", 
+        descobrir: "Descubrir Braga en 3 Días", 
+        infantil: "Ruta Infantil", 
+        afterdark: "Braga After Dark", 
+        mapas: "Mapa Turístico de Braga", 
+        label: "Idioma", 
+        footer: "© Ayuntamiento de Braga" 
+      },
+      fr: { 
+        title: "Cartes et Itinéraires de Braga", 
+        subtitle: "Choisissez un thème ci-dessous pour voir les détails et les liens de téléchargement.", 
+        barroco: "Itinéraire Baroque", 
+        descobrir: "Découvrir Braga en 3 Jours", 
+        infantil: "Itinéraire pour Enfants", 
+        afterdark: "Braga After Dark", 
+        mapas: "Carte Touristique de Braga", 
+        label: "Langue", 
+        footer: "© Ville de Braga" 
+      },
+      it: { 
+        title: "Mappe e Itinerari di Braga", 
+        subtitle: "Scegli un tema qui sotto per visualizzare i dettagli e i link per il download.", 
+        barroco: "Itinerario Barocco", 
+        descobrir: "Scoprire Braga in 3 Giorni", 
+        infantil: "Itinerario per Bambini", 
+        afterdark: "Braga After Dark", 
+        mapas: "Mappa Turistica di Braga", 
+        label: "Lingua", 
+        footer: "© Città di Braga" 
+      },
+      de: { 
+        title: "Braga Karten und Routen", 
+        subtitle: "Wählen Sie ein Thema aus, um Details und Download-Links anzuzeigen.", 
+        barroco: "Barock-Route", 
+        descobrir: "Braga in 3 Tagen entdecken", 
+        infantil: "Kinderroute", 
+        afterdark: "Braga After Dark", 
+        mapas: "Touristenkarte von Braga", 
+        label: "Sprache", 
+        footer: "© Stadt Braga" 
+      },
+      pl: { 
+        title: "Mapy i Trasy Bragi", 
+        subtitle: "Wybierz temat poniżej, aby zobaczyć szczegóły i linki do pobrania.", 
+        barroco: "Szlak Barokowy", 
+        descobrir: "Odkryj Bragę w 3 Dni", 
+        infantil: "Trasa dla Dzieci", 
+        afterdark: "Braga After Dark", 
+        mapas: "Mapa Turystyczna Bragi", 
+        label: "Język", 
+        footer: "© Miasto Braga" 
+      },
+      nl: { 
+        title: "Braga Kaarten en Routes", 
+        subtitle: "Kies een thema hieronder om details en downloadlinks te bekijken.", 
+        barroco: "Barokroute", 
+        descobrir: "Ontdek Braga in 3 Dagen", 
+        infantil: "Kinderroute", 
+        afterdark: "Braga After Dark", 
+        mapas: "Toeristische Kaart Braga", 
+        label: "Taal", 
+        footer: "© Stad Braga" 
+      },
+      ru: { 
+        title: "Карты и Маршруты Браги", 
+        subtitle: "Выберите тему ниже, чтобы увидеть детали и ссылки для скачивания.", 
+        barroco: "Маршрут в стиле барокко", 
+        descobrir: "Откройте Брагу за 3 Дня", 
+        infantil: "Детский маршрут", 
+        afterdark: "Брага После Заката", 
+        mapas: "Туристическая Карта Браги", 
+        label: "Язык", 
+        footer: "© Город Брага" 
+      },
+      zh: { 
+        title: "布拉加地图与路线", 
+        subtitle: "请选择下方主题以查看详细信息和下载链接。", 
+        barroco: "巴洛克路线", 
+        descobrir: "三天探索布拉加", 
+        infantil: "儿童路线", 
+        afterdark: "布拉加夜游", 
+        mapas: "布拉加旅游地图", 
+        label: "语言", 
+        footer: "© 布拉加市" 
+      },
+      ja: { 
+        title: "ブラガの地図とルート", 
+        subtitle: "詳細とダウンロードリンクを見るには、以下のテーマを選択してください。", 
+        barroco: "バロックルート", 
+        descobrir: "3日間でブラガを発見", 
+        infantil: "子供向けルート", 
+        afterdark: "ブラガ・アフター・ダーク", 
+        mapas: "ブラガ観光地図", 
+        label: "言語", 
+        footer: "© ブラガ市" 
+      }
+    };
+
+    const flags = { pt: "PT", en: "EN", es: "ES", fr: "FR", it: "IT", de: "DE", pl: "PL", nl: "NL", ru: "RU", zh: "中文", ja: "日" };
+    
+    // Função para atualizar a lista de opções de idiomas, excluindo o idioma ativo
+    function updateLangOptions(currentLang) {
+      const optionsDiv = document.getElementById("lang-options");
+      optionsDiv.innerHTML = ''; 
+
+      for (const l in flags) {
+        if (l !== currentLang) { 
+          const div = document.createElement("div");
+          div.className = "lang-icon";
+          div.textContent = flags[l];
+          div.addEventListener('click', () => {
+            setLanguage(l);
+            optionsDiv.classList.remove("show");
+          });
+          optionsDiv.appendChild(div);
+        }
+      }
+    }
+
+    function setLanguage(lang) {
+      const t = translations[lang] || translations["en"];
+      document.getElementById("title").textContent = t.title;
+      document.getElementById("subtitle").textContent = t.subtitle;
+      document.getElementById("barroco").innerHTML = `<i class='fa-solid fa-landmark'></i> ${t.barroco}`;
+      document.getElementById("descobrir").innerHTML = `<i class='fa-solid fa-route'></i> ${t.descobrir}`;
+      document.getElementById("infantil").innerHTML = `<i class='fa-solid fa-child'></i> ${t.infantil}`;
+      document.getElementById("afterdark").innerHTML = `<i class='fa-solid fa-moon'></i> ${t.afterdark}`;
+      document.getElementById("mapas").innerHTML = `<i class='fa-solid fa-map'></i> ${t.mapas}`;
+      document.getElementById("footer").textContent = t.footer;
+      document.getElementById("lang-label").textContent = t.label;
+      document.getElementById("current-lang").textContent = flags[lang] || "EN";
+      document.documentElement.lang = lang;
+      
+      updateLangOptions(lang);
+    }
+
+    // Listener para abrir/fechar o dropdown
+    document.getElementById("current-lang").addEventListener("click", () => {
+      document.getElementById("lang-options").classList.toggle("show");
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const userLang = navigator.language.slice(0,2);
+      const supported = Object.keys(translations);
+      const lang = supported.includes(userLang) ? userLang : "en";
+      setLanguage(lang); 
+    });
+  </script>
+</body>
+</html>
