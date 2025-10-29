@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tourist Maps</title>
   <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"></noscript>
   <style>
     html, body {
       margin: 0;
@@ -104,6 +106,103 @@
       user-select: none;
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
+    
+    /* --- INÍCIO: Estilos do Novo Menu Flutuante (Canto Superior Direito) --- */
+
+    .menu-dropdown {
+      position: fixed;
+      top: 20px; 
+      right: 20px; 
+      z-index: 1001; 
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; 
+      opacity: 0;
+      transform: translateY(-20px);
+      animation: floatInTop 0.8s ease forwards 1.2s;
+    }
+
+    @keyframes floatInTop {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* NOVO ESTILO DO BOTÃO DE MENU (como roteiro Barroco_v4) */
+    .menu-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: #f7a01d; /* Cor Laranja/Âmbar */
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem; 
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .menu-icon:hover {
+      transform: scale(1.1);
+      background-color: #e6911c; /* Laranja mais escuro no hover */
+    }
+
+    .menu-options {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 6px; 
+      align-items: flex-end; 
+    }
+
+    .menu-options.show {
+      display: flex;
+      animation: fadeSlideDown 0.4s ease forwards;
+    }
+
+    /* NOVO ESTILO DOS LINKS DO MENU (com ícone à direita) */
+    .menu-option-link {
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-end; /* Alinhar à direita (texto esq, ícone dir) */
+      gap: 8px; /* Espaçamento entre texto e ícone */
+      
+      background-color: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      border-radius: 12px;
+      text-align: right; 
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color 0.3s, transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transform: translateY(-10px); 
+      animation: optionPopDown 0.35s ease forwards;
+    }
+
+    .menu-option-link:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+        transform: scale(1.05);
+    }
+    
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes optionPopDown {
+      0% { opacity: 0; transform: translateY(-10px) scale(0.8); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .menu-options.show .menu-option-link:nth-child(n) {
+      animation-delay: calc(0.05s * var(--i));
+    }
+
+    /* --- FIM: Estilos do Novo Menu Flutuante --- */
 
     /* Botão flutuante de idiomas com legenda horizontal */
     .lang-dropdown {
@@ -221,6 +320,15 @@
     </main>
   </div>
 
+  <div class="menu-dropdown">
+    <div class="menu-main">
+      <div id="menu-toggler" class="menu-icon">
+        <i class="fa-solid fa-bars"></i> </div>
+    </div>
+    <div class="menu-options" id="menu-options">
+      </div>
+  </div>
+
   <div class="lang-dropdown">
     <div class="lang-main">
       <div id="current-lang" class="lang-icon">EN</div>
@@ -238,16 +346,15 @@
           mapBraga: "Mapa Turístico de Braga",
           mapNorte: "Mapa da Região Norte de Portugal"
         },
-        langLabel: "Alterar idioma"
-      },
-      es: {
-        title: "Mapas Turísticos",
-        description: "Descarga aquí los mapas deseados:",
-        buttons: {
-          mapBraga: "Mapa Turístico de Braga",
-          mapNorte: "Mapa de la Región Norte de Portugal"
-        },
-        langLabel: "Cambiar idioma"
+        langLabel: "Alterar idioma",
+        menu: {
+          // REMOVIDO: menuLink6 (Mapa Turístico)
+          menuLink1: "Página Principal de Roteiros",
+          menuLink2: "Roteiro do Barroco",
+          menuLink3: "Descobrir Braga em 3 dias",
+          menuLink4: "Roteiro Infantil",
+          menuLink5: "Braga After Dark"
+        }
       },
       en: {
         title: "Tourist Maps",
@@ -256,16 +363,49 @@
           mapBraga: "Tourist Map of Braga",
           mapNorte: "Map of Northern Portugal Region"
         },
-        langLabel: "Change language"
+        langLabel: "Change language",
+        menu: {
+          // REMOVIDO: menuLink6 (Braga Tourist Map)
+          menuLink1: "Main Routes Page",
+          menuLink2: "Baroque Route",
+          menuLink3: "Discover Braga in 3 Days",
+          menuLink4: "Children's Route",
+          menuLink5: "Braga After Dark"
+        }
+      },
+      es: {
+        title: "Mapas Turísticos",
+        description: "Descarga aquí los mapas deseados:",
+        buttons: {
+          mapBraga: "Mapa Turístico de Braga",
+          mapNorte: "Mapa de la Región Norte de Portugal"
+        },
+        langLabel: "Cambiar idioma",
+        menu: {
+          // REMOVIDO: menuLink6 (Mapa Turístico de Braga)
+          menuLink1: "Página Principal de Rutas",
+          menuLink2: "Ruta del Barroco",
+          menuLink3: "Descubrir Braga en 3 Días",
+          menuLink4: "Ruta Infantil",
+          menuLink5: "Braga After Dark"
+        }
       },
       fr: {
         title: "Cartes Touristiques",
-        description: "Téléchargez ici les cartes souhaitées :",
+        description: "Téléchargez aqui les cartes souhaitées :",
         buttons: {
           mapBraga: "Carte Touristique de Braga",
           mapNorte: "Carte de la Région Nord du Portugal"
         },
-        langLabel: "Changer de langue"
+        langLabel: "Changer de langue",
+        menu: {
+          // REMOVIDO: menuLink6 (Carte Touristique de Braga)
+          menuLink1: "Page Principale Itinéraires",
+          menuLink2: "Itinéraire Baroque",
+          menuLink3: "Découvrir Braga en 3 Jours",
+          menuLink4: "Itinéraire pour Enfants",
+          menuLink5: "Braga After Dark"
+        }
       },
       it: {
         title: "Mappe Turistiche",
@@ -274,7 +414,15 @@
           mapBraga: "Mappa Turistica di Braga",
           mapNorte: "Mappa della Regione Nord del Portogallo"
         },
-        langLabel: "Cambia lingua"
+        langLabel: "Cambia lingua",
+        menu: {
+          // REMOVIDO: menuLink6 (Mappa Turistica di Braga)
+          menuLink1: "Pagina Principale Itinerari",
+          menuLink2: "Itinerario Barocco",
+          menuLink3: "Scoprire Braga in 3 Giorni",
+          menuLink4: "Itinerario per Bambini",
+          menuLink5: "Braga After Dark"
+        }
       },
       de: {
         title: "Touristische Karten",
@@ -283,7 +431,15 @@
           mapBraga: "Touristische Karte von Braga",
           mapNorte: "Karte der Region Nordportugal"
         },
-        langLabel: "Sprache ändern"
+        langLabel: "Sprache ändern",
+        menu: {
+          // REMOVIDO: menuLink6 (Touristische Karte von Braga)
+          menuLink1: "Hauptseite Routen",
+          menuLink2: "Barock-Route",
+          menuLink3: "Braga in 3 Tagen entdecken",
+          menuLink4: "Kinderroute",
+          menuLink5: "Braga After Dark"
+        }
       },
       pl: {
         title: "Mapy Turystyczne",
@@ -292,7 +448,15 @@
           mapBraga: "Mapa Turystyczna Bragi",
           mapNorte: "Mapa Regionu Północnego Portugalii"
         },
-        langLabel: "Zmień język"
+        langLabel: "Zmień język",
+        menu: {
+          // REMOVIDO: menuLink6 (Mapa Turystyczna Bragi)
+          menuLink1: "Główna Strona Tras",
+          menuLink2: "Szlak Barokowy",
+          menuLink3: "Odkryj Bragę w 3 Dni",
+          menuLink4: "Trasa dla Dzieci",
+          menuLink5: "Braga After Dark"
+        }
       },
       zh: {
         title: "旅游地图",
@@ -301,7 +465,15 @@
           mapBraga: "布拉加旅游地图",
           mapNorte: "葡萄牙北部地区地图"
         },
-        langLabel: "更改语言"
+        langLabel: "更改语言",
+        menu: {
+          // REMOVIDO: menuLink6 (布拉加旅游地图)
+          menuLink1: "主要路线页面",
+          menuLink2: "巴洛克路线",
+          menuLink3: "三天探索布拉加",
+          menuLink4: "儿童路线",
+          menuLink5: "布拉加夜游"
+        }
       },
       ja: {
         title: "観光マップ",
@@ -310,7 +482,15 @@
           mapBraga: "ブラガ観光マップ",
           mapNorte: "ポルトガル北部地域マップ"
         },
-        langLabel: "言語を変更"
+        langLabel: "言語を変更",
+        menu: {
+          // REMOVIDO: menuLink6 (ブラガ観光地図)
+          menuLink1: "メインルートページ",
+          menuLink2: "バロックルート",
+          menuLink3: "3日間でブラガを発見",
+          menuLink4: "子供向けルート",
+          menuLink5: "ブラガ・アフター・ダーク"
+        }
       },
       ru: {
         title: "Туристические Карты",
@@ -319,7 +499,15 @@
           mapBraga: "Туристическая Карта Браги",
           mapNorte: "Карта Северного Региона Португалии"
         },
-        langLabel: "Сменить язык"
+        langLabel: "Сменить язык",
+        menu: {
+          // REMOVIDO: menuLink6 (Туристическая карта Браги)
+          menuLink1: "Главная страница маршрутов",
+          menuLink2: "Барочный маршрут",
+          menuLink3: "Откройте Брагу за 3 Дня",
+          menuLink4: "Детский маршрут",
+          menuLink5: "Брага После Заката"
+        }
       },
       nl: {
         title: "Toeristische Kaarten",
@@ -328,8 +516,82 @@
           mapBraga: "Toeristische Kaart van Braga",
           mapNorte: "Kaart van de Regio Noord-Portugal"
         },
-        langLabel: "Taal wijzigen"
+        langLabel: "Taal wijzigen",
+        menu: {
+          // REMOVIDO: menuLink6 (Toeristische Kaart van Braga)
+          menuLink1: "Hoofdroutes Pagina",
+          menuLink2: "Barokroute",
+          menuLink3: "Ontdek Braga in 3 Dagen",
+          menuLink4: "Kinderroute",
+          menuLink5: "Braga After Dark"
+        }
       }
+    };
+
+    // Dados dos links para o menu flutuante (URLs fixos)
+    const menuLinksData = [
+      // REMOVIDO o link para a página de mapas
+      { id: "menuLink2", url: "https://bragatur.github.io/roteiro_barroco_braga/" }, // Roteiro do Barroco
+      { id: "menuLink3", url: "https://bragatur.github.io/roteiros/" }, // Descobrir Braga em 3 dias
+      { id: "menuLink4", url: "https://bragatur.github.io/roteiro_intantil/" }, // Roteiro Infantil (ALTERADO)
+      { id: "menuLink5", url: "https://bragatur.github.io/bragaafterdark/" } // Braga After Dark (ALTERADO)
+    ];
+
+    // Mapeamento dos Ícones (Os que correspondiam ao mapa turístico são agora ignorados)
+    const menuIcons = {
+        // Roteiro do Barroco
+        "Roteiro do Barroco": "fa-solid fa-church",
+        "Baroque Route": "fa-solid fa-church",
+        "Ruta del Barroco": "fa-solid fa-church",
+        "Itinéraire Baroque": "fa-solid fa-church",
+        "Itinerario Barocco": "fa-solid fa-church",
+        "Barock-Route": "fa-solid fa-church",
+        "Szlak Barokowy": "fa-solid fa-church",
+        "巴洛克路线": "fa-solid fa-church",
+        "バロックルート": "fa-solid fa-church",
+        "Барочный маршрут": "fa-solid fa-church",
+        "Barokroute": "fa-solid fa-church",
+        // 3 Dias
+        "Descobrir Braga em 3 dias": "fa-solid fa-route",
+        "Discover Braga in 3 Days": "fa-solid fa-route",
+        "Descubrir Braga en 3 Días": "fa-solid fa-route",
+        "Découvrir Braga en 3 Jours": "fa-solid fa-route",
+        "Scoprire Braga in 3 Giorni": "fa-solid fa-route",
+        "Braga in 3 Tagen entdecken": "fa-solid fa-route",
+        "Odkryj Bragę w 3 Dni": "fa-solid fa-route",
+        "三天探索布拉加": "fa-solid fa-route",
+        "3日間でブラガを発見": "fa-solid fa-route",
+        "Откройте Брагу за 3 Дня": "fa-solid fa-route",
+        "Ontdek Braga in 3 Dagen": "fa-solid fa-route",
+        // Infantil
+        "Roteiro Infantil": "fa-solid fa-child-reaching",
+        "Children's Route": "fa-solid fa-child-reaching",
+        "Ruta Infantil": "fa-solid fa-child-reaching",
+        "Itinéraire pour Enfants": "fa-solid fa-child-reaching",
+        "Itinerario per Bambini": "fa-solid fa-child-reaching",
+        "Kinderroute": "fa-solid fa-child-reaching",
+        "Trasa dla Dzieci": "fa-solid fa-child-reaching",
+        "儿童路线": "fa-solid fa-child-reaching",
+        "子供向けルート": "fa-solid fa-child-reaching",
+        "Детский маршрут": "fa-solid fa-child-reaching",
+        // After Dark
+        "Braga After Dark": "fa-solid fa-moon",
+        "Braga After Dark": "fa-solid fa-moon", 
+        "Брага После Заката": "fa-solid fa-moon",
+        "布拉加夜游": "fa-solid fa-moon",
+        "ブラガ・アフター・ダーク": "fa-solid fa-moon",
+        // Principal
+        "Página Principal de Roteiros": "fa-solid fa-list",
+        "Main Routes Page": "fa-solid fa-list",
+        "Página Principal de Rutas": "fa-solid fa-list",
+        "Page Principale Itinéraires": "fa-solid fa-list",
+        "Pagina Principale Itinerari": "fa-solid fa-list",
+        "Hauptseite Routen": "fa-solid fa-list",
+        "Główna Strona Tras": "fa-solid fa-list",
+        "主要路线页面": "fa-solid fa-list",
+        "メインルートページ": "fa-solid fa-list",
+        "Главная страница маршрутов": "fa-solid fa-list",
+        "Hoofdroutes Pagina": "fa-solid fa-list"
     };
 
     const flagMap = { pt: 'PT', es: 'ES', en: 'EN', fr: 'FR', it: 'IT', de: 'DE', pl: 'PL', zh: '中文', ja: '日', ru: 'RU', nl: 'NL' };
@@ -337,6 +599,45 @@
     const currentLang = document.getElementById('current-lang');
     const options = dropdown.querySelector('.lang-options');
     const langLabel = document.getElementById('lang-label');
+
+    const menuToggler = document.getElementById('menu-toggler');
+    const menuOptions = document.getElementById('menu-options');
+    
+    // Funções do Menu de Roteiros (Atualizada)
+    function renderMenu(lang) {
+        const t = texts[lang] || texts["en"];
+        menuOptions.innerHTML = '';
+        let i = 1;
+
+        menuLinksData.forEach((linkData) => {
+            const a = document.createElement('a');
+            a.className = 'menu-option-link';
+            a.href = linkData.url;
+
+            const linkName = t.menu[linkData.id];
+            const iconClass = menuIcons[linkName] || 'fa-solid fa-circle-info'; // Fallback icon
+            
+            // Adiciona o nome do link e o ícone
+            a.innerHTML = `${linkName} <i class="${iconClass}"></i>`; 
+
+            a.target = "_self"; 
+            a.style.setProperty('--i', i++);
+            menuOptions.appendChild(a);
+        });
+    }
+
+    // LÓGICA ATUALIZADA para mudar o ícone entre Menu e X
+    if (menuToggler) {
+        menuToggler.addEventListener('click', () => {
+            menuOptions.classList.toggle('show');
+            if (menuOptions.classList.contains('show')) {
+                menuToggler.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+            } else {
+                menuToggler.innerHTML = '<i class="fa-solid fa-bars"></i>';
+            }
+        });
+    }
+    // FIM LÓGICA ATUALIZADA
 
     function renderDropdown(current) {
       options.innerHTML = '';
@@ -370,6 +671,9 @@
       currentLang.textContent = flagMap[lang];
       renderDropdown(lang);
       options.classList.remove('show');
+
+      // Renderiza o menu flutuante com o idioma correto
+      renderMenu(lang);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
