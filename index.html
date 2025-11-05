@@ -412,7 +412,6 @@
           menuLink5: "Braga After Dark"
         }
       }
-      // Idiomas removidos: it, de, pl, zh, ja, ru, nl
     };
 
     // Dados dos links para o menu flutuante (URLs fixos)
@@ -455,7 +454,7 @@
     const currentLang = document.getElementById('current-lang');
     const options = dropdown.querySelector('.lang-options');
     const langLabel = document.getElementById('lang-label');
-    const btnMapBraga = document.getElementById("btn-map-braga"); // Adicionado para fácil acesso
+    const btnMapBraga = document.getElementById("btn-map-braga"); 
 
     const menuToggler = document.getElementById('menu-toggler');
     const menuOptions = document.getElementById('menu-options');
@@ -543,10 +542,20 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      const userLang = navigator.language.slice(0,2);
       const supported = Object.keys(texts);
-      // O idioma predefinido deve ser 'en' se o do utilizador não estiver nos 4 suportados
-      const lang = supported.includes(userLang) ? userLang : 'en'; 
+      // Tenta obter a lista de idiomas preferidos do navegador, caso contrário usa o principal.
+      const preferredLangs = navigator.languages || (navigator.language ? [navigator.language] : []);
+      let lang = 'en'; // Idioma padrão: Inglês
+
+      // Itera sobre os idiomas preferidos do navegador e usa o primeiro suportado.
+      for (let i = 0; i < preferredLangs.length; i++) {
+          const checkLang = preferredLangs[i].slice(0, 2).toLowerCase();
+          if (supported.includes(checkLang)) {
+              lang = checkLang; // Define o primeiro idioma suportado encontrado
+              break; // Para de procurar
+          }
+      }
+      
       setLanguage(lang);
     });
   </script>
