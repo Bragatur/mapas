@@ -13,6 +13,7 @@
       padding: 0;
       height: 100%;
       font-family: "Segoe UI", sans-serif;
+      /* Imagem de fundo atualizada */
       background: url('https://raw.githubusercontent.com/Bragatur/mapas/refs/heads/main/Mockup-mapas-v2.jpg') no-repeat center center fixed;
       background-size: cover;
       color: white;
@@ -338,7 +339,7 @@
   </div>
 
   <script>
-    // URLS dos mapas turísticos por idioma
+    // URLS dos mapas turísticos por idioma (4 idiomas)
     const bragaMapUrls = {
         pt: "https://visitbraga.travel/wp-content/uploads/2025/11/Mapa_Turistico_Oficial_De_Braga_Portugues.pdf",
         es: "https://visitbraga.travel/wp-content/uploads/2025/11/Plano_Turistico_Oficial_De_Braga_Espanol.pdf",
@@ -346,7 +347,7 @@
         en: "https://visitbraga.travel/wp-content/uploads/2025/10/Official_Tourist_Map_Of_Braga_EN.pdf"
     };
 
-    // Redução dos idiomas suportados
+    // Textos suportados (4 idiomas)
     const texts = {
       pt: {
         title: "Mapas Turísticos",
@@ -414,58 +415,34 @@
       }
     };
 
-    // Dados dos links para o menu flutuante (URLs fixos)
     const menuLinksData = [
-      { id: "menuLink2", url: "https://bragatur.github.io/roteiro_barroco_braga/" }, // Roteiro do Barroco
-      { id: "menuLink3", url: "https://bragatur.github.io/roteiros/" }, // Descobrir Braga em 3 dias
-      { id: "menuLink4", url: "https://bragatur.github.io/roteiro_intantil/" }, // Roteiro Infantil 
-      { id: "menuLink5", url: "https://bragatur.github.io/bragaafterdark/" } // Braga After Dark 
+      { id: "menuLink2", url: "https://bragatur.github.io/roteiro_barroco_braga/" },
+      { id: "menuLink3", url: "https://bragatur.github.io/roteiros/" },
+      { id: "menuLink4", url: "https://bragatur.github.io/roteiro_intantil/" },
+      { id: "menuLink5", url: "https://bragatur.github.io/bragaafterdark/" } 
     ];
 
-    // Mapeamento dos Ícones (Reduzido para os idiomas existentes)
     const menuIcons = {
-        // Roteiro do Barroco
-        "Roteiro do Barroco": "fa-solid fa-church",
-        "Baroque Route": "fa-solid fa-church",
-        "Ruta del Barroco": "fa-solid fa-church",
-        "Itinéraire Baroque": "fa-solid fa-church",
-        // 3 Dias
-        "Descobrir Braga em 3 dias": "fa-solid fa-route",
-        "Discover Braga in 3 Days": "fa-solid fa-route",
-        "Descubrir Braga en 3 Días": "fa-solid fa-route",
-        "Découvrir Braga en 3 Jours": "fa-solid fa-route",
-        // Infantil
-        "Roteiro Infantil": "fa-solid fa-child-reaching",
-        "Children's Route": "fa-solid fa-child-reaching",
-        "Ruta Infantil": "fa-solid fa-child-reaching",
-        "Itinéraire pour Enfants": "fa-solid fa-child-reaching",
-        // After Dark
+        "Roteiro do Barroco": "fa-solid fa-church", "Baroque Route": "fa-solid fa-church", "Ruta del Barroco": "fa-solid fa-church", "Itinéraire Baroque": "fa-solid fa-church",
+        "Descobrir Braga em 3 dias": "fa-solid fa-route", "Discover Braga in 3 Days": "fa-solid fa-route", "Descubrir Braga en 3 Días": "fa-solid fa-route", "Découvrir Braga en 3 Jours": "fa-solid fa-route",
+        "Roteiro Infantil": "fa-solid fa-child-reaching", "Children's Route": "fa-solid fa-child-reaching", "Ruta Infantil": "fa-solid fa-child-reaching", "Itinéraire pour Enfants": "fa-solid fa-child-reaching",
         "Braga After Dark": "fa-solid fa-moon",
-        // Principal
-        "Página Principal de Roteiros": "fa-solid fa-list",
-        "Main Routes Page": "fa-solid fa-list",
-        "Página Principal de Rutas": "fa-solid fa-list",
-        "Page Principale Itinéraires": "fa-solid fa-list"
+        "Página Principal de Roteiros": "fa-solid fa-list", "Main Routes Page": "fa-solid fa-list", "Página Principal de Rutas": "fa-solid fa-list", "Page Principale Itinéraires": "fa-solid fa-list"
     };
 
-    // Redução do flagMap para os 4 idiomas
     const flagMap = { pt: 'PT', es: 'ES', en: 'EN', fr: 'FR' };
     const dropdown = document.querySelector('.lang-dropdown');
     const currentLang = document.getElementById('current-lang');
     const options = dropdown.querySelector('.lang-options');
     const langLabel = document.getElementById('lang-label');
     const btnMapBraga = document.getElementById("btn-map-braga"); 
-
     const menuToggler = document.getElementById('menu-toggler');
     const menuOptions = document.getElementById('menu-options');
     
-    // Funções do Menu de Roteiros (Atualizada)
     function renderMenu(lang) {
         const t = texts[lang] || texts["en"];
         menuOptions.innerHTML = '';
         let i = 1;
-
-        // O primeiro link é sempre a "Página Principal de Roteiros" com URL fixo
         const mainRouteLinkData = { id: "menuLink1", url: "https://bragatur.github.io/roteiros/" }; 
         const linkDatas = [mainRouteLinkData, ...menuLinksData];
 
@@ -473,19 +450,15 @@
             const a = document.createElement('a');
             a.className = 'menu-option-link';
             a.href = linkData.url;
-
             const linkName = t.menu[linkData.id];
-            const iconClass = menuIcons[linkName] || 'fa-solid fa-circle-info'; // Fallback icon
-            
+            const iconClass = menuIcons[linkName] || 'fa-solid fa-circle-info'; 
             a.innerHTML = `${linkName} <i class="${iconClass}"></i>`; 
-
             a.target = "_self"; 
             a.style.setProperty('--i', i++);
             menuOptions.appendChild(a);
         });
     }
 
-    // LÓGICA ATUALIZADA para mudar o ícone entre Menu e X
     if (menuToggler) {
         menuToggler.addEventListener('click', () => {
             menuOptions.classList.toggle('show');
@@ -496,7 +469,6 @@
             }
         });
     }
-    // FIM LÓGICA ATUALIZADA
 
     function renderDropdown(current) {
       options.innerHTML = '';
@@ -515,11 +487,11 @@
 
     currentLang.addEventListener('click', () => { options.classList.toggle('show'); });
 
-    // Função de mudança de idioma atualizada para definir o URL do mapa
     function setLanguage(lang) {
+      // Usa o 'en' como fallback caso o idioma não esteja definido nos "texts"
       const content = texts[lang] || texts['en'];
       
-      // Garante que o link do mapa de Braga existe para o idioma (deve ser 'en' se não houver)
+      // Usa o URL do mapa em 'en' como fallback
       const mapUrl = bragaMapUrls[lang] || bragaMapUrls['en']; 
 
       document.getElementById("title").textContent = content.title;
@@ -528,7 +500,7 @@
       document.title = content.title;
       
       btnMapBraga.innerHTML = `<i class="lni lni-download"></i> ${content.buttons.mapBraga}`;
-      btnMapBraga.href = mapUrl; // DEFINE O NOVO LINK DO MAPA
+      btnMapBraga.href = mapUrl;
 
       document.getElementById("btn-map-norte").innerHTML = `<i class="lni lni-download"></i> ${content.buttons.mapNorte}`;
 
@@ -537,26 +509,28 @@
       renderDropdown(lang);
       options.classList.remove('show');
 
-      // Renderiza o menu flutuante com o idioma correto
       renderMenu(lang);
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-      const supported = Object.keys(texts);
-      // Tenta obter a lista de idiomas preferidos do navegador, caso contrário usa o principal.
-      const preferredLangs = navigator.languages || (navigator.language ? [navigator.language] : []);
-      let lang = 'en'; // Idioma padrão: Inglês
+      const supportedLangs = Object.keys(texts); // ['pt', 'en', 'es', 'fr']
+      let finalLang = 'en'; // Padrão: Inglês (se não encontrar um dos 4)
 
-      // Itera sobre os idiomas preferidos do navegador e usa o primeiro suportado.
+      // Obtém a lista de idiomas preferidos do navegador (ex: ['pt-PT', 'en-US', 'fr'])
+      const preferredLangs = navigator.languages || (navigator.language ? [navigator.language] : []);
+      
+      // Percorre os idiomas preferidos e usa o primeiro que for suportado.
       for (let i = 0; i < preferredLangs.length; i++) {
-          const checkLang = preferredLangs[i].slice(0, 2).toLowerCase();
-          if (supported.includes(checkLang)) {
-              lang = checkLang; // Define o primeiro idioma suportado encontrado
+          // Extrai o código base (ex: 'pt' de 'pt-PT')
+          const baseLangCode = preferredLangs[i].slice(0, 2).toLowerCase();
+          
+          if (supportedLangs.includes(baseLangCode)) {
+              finalLang = baseLangCode; // Encontrou um idioma suportado
               break; // Para de procurar
           }
       }
       
-      setLanguage(lang);
+      setLanguage(finalLang);
     });
   </script>
 </body>
