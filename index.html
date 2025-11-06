@@ -443,8 +443,8 @@
         const t = texts[lang] || texts["en"];
         menuOptions.innerHTML = '';
         let i = 1;
-        const mainRouteLinkData = { id: "menuLink1", url: "https://bragatur.github.io/roteiros/" }; 
-        const linkDatas = [mainRouteLinkData, ...menuLinksData];
+        // A linha que adicionava a "Página Principal de Roteiros" foi removida.
+        const linkDatas = menuLinksData; 
 
         linkDatas.forEach((linkData) => {
             const a = document.createElement('a');
