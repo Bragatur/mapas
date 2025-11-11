@@ -362,7 +362,8 @@
           menuLink2: "Roteiro do Barroco",
           menuLink3: "Descobrir Braga em 3 dias",
           menuLink4: "Roteiro Infantil",
-          menuLink5: "Braga After Dark"
+          menuLink5: "Braga After Dark",
+          menuLink6: "Lojas com História" // NOVO
         }
       },
       en: {
@@ -378,7 +379,8 @@
           menuLink2: "Baroque Route",
           menuLink3: "Discover Braga in 3 Days",
           menuLink4: "Children's Route",
-          menuLink5: "Braga After Dark"
+          menuLink5: "Braga After Dark",
+          menuLink6: "Historic Shops" // NOVO
         }
       },
       es: {
@@ -394,7 +396,8 @@
           menuLink2: "Ruta del Barroco",
           menuLink3: "Descubrir Braga en 3 Días",
           menuLink4: "Ruta Infantil",
-          menuLink5: "Braga After Dark"
+          menuLink5: "Braga After Dark",
+          menuLink6: "Tiendas con Historia" // NOVO
         }
       },
       fr: {
@@ -410,7 +413,8 @@
           menuLink2: "Itinéraire Baroque",
           menuLink3: "Découvrir Braga en 3 Jours",
           menuLink4: "Itinéraire pour Enfants",
-          menuLink5: "Braga After Dark"
+          menuLink5: "Braga After Dark",
+          menuLink6: "Boutiques Historiques" // NOVO
         }
       }
     };
@@ -419,7 +423,8 @@
       { id: "menuLink2", url: "https://bragatur.github.io/roteiro_barroco_braga/" },
       { id: "menuLink3", url: "https://bragatur.github.io/roteiros/" },
       { id: "menuLink4", url: "https://bragatur.github.io/roteiro_intantil/" },
-      { id: "menuLink5", url: "https://bragatur.github.io/bragaafterdark/" } 
+      { id: "menuLink5", url: "https://bragatur.github.io/bragaafterdark/" }, 
+      { id: "menuLink6", url: "https://visitbraga.travel/wp-content/uploads/2025/11/Livro_Lojas_Com_Historia_Braga.pdf" } // NOVO LINK
     ];
 
     const menuIcons = {
@@ -427,6 +432,7 @@
         "Descobrir Braga em 3 dias": "fa-solid fa-route", "Discover Braga in 3 Days": "fa-solid fa-route", "Descubrir Braga en 3 Días": "fa-solid fa-route", "Découvrir Braga en 3 Jours": "fa-solid fa-route",
         "Roteiro Infantil": "fa-solid fa-child-reaching", "Children's Route": "fa-solid fa-child-reaching", "Ruta Infantil": "fa-solid fa-child-reaching", "Itinéraire pour Enfants": "fa-solid fa-child-reaching",
         "Braga After Dark": "fa-solid fa-moon",
+        "Lojas com História": "fa-solid fa-shop", "Historic Shops": "fa-solid fa-shop", "Tiendas con Historia": "fa-solid fa-shop", "Boutiques Historiques": "fa-solid fa-shop", // NOVO ÍCONE
         "Página Principal de Roteiros": "fa-solid fa-list", "Main Routes Page": "fa-solid fa-list", "Página Principal de Rutas": "fa-solid fa-list", "Page Principale Itinéraires": "fa-solid fa-list"
     };
 
@@ -453,7 +459,8 @@
             const linkName = t.menu[linkData.id];
             const iconClass = menuIcons[linkName] || 'fa-solid fa-circle-info'; 
             a.innerHTML = `${linkName} <i class="${iconClass}"></i>`; 
-            a.target = "_self"; 
+            a.target = (linkData.id === "menuLink6") ? "_blank" : "_self"; // Abre "Lojas com História" (menuLink6) numa nova aba
+            a.rel = (linkData.id === "menuLink6") ? "noopener noreferrer" : "";
             a.style.setProperty('--i', i++);
             menuOptions.appendChild(a);
         });
