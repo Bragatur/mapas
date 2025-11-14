@@ -224,20 +224,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .lang-label {
-      background-color: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      font-size: 0.8rem;
-      padding: 6px 12px;
-      border-radius: 12px;
-      margin-top: 8px;
-      letter-spacing: 0.5px;
-      user-select: none;
-      text-align: center;
-      transition: opacity 0.3s;
-      white-space: nowrap;
-    }
-
     .lang-main {
       display: flex;
       flex-direction: column;
@@ -335,7 +321,6 @@
       <div id="current-lang" class="lang-icon">EN</div>
     </div>
     <div class="lang-options"></div>
-    <span class="lang-label" id="lang-label">Change language</span>
   </div>
 
   <script>
@@ -356,7 +341,6 @@
           mapBraga: "Mapa Turístico de Braga",
           mapNorte: "Mapa da Região Norte de Portugal"
         },
-        langLabel: "Alterar idioma",
         menu: {
           menuLink1: "Página Principal de Roteiros",
           menuLink2: "Roteiro do Barroco",
@@ -373,7 +357,6 @@
           mapBraga: "Tourist Map of Braga",
           mapNorte: "Map of Northern Portugal Region"
         },
-        langLabel: "Change language",
         menu: {
           menuLink1: "Main Routes Page",
           menuLink2: "Baroque Route",
@@ -390,7 +373,6 @@
           mapBraga: "Mapa Turístico de Braga",
           mapNorte: "Mapa de la Región Norte de Portugal"
         },
-        langLabel: "Cambiar idioma",
         menu: {
           menuLink1: "Página Principal de Rutas",
           menuLink2: "Ruta del Barroco",
@@ -407,7 +389,6 @@
           mapBraga: "Carte Touristique de Braga",
           mapNorte: "Carte de la Région Nord du Portugal"
         },
-        langLabel: "Changer de langue",
         menu: {
           menuLink1: "Page Principale Itinéraires",
           menuLink2: "Itinéraire Baroque",
@@ -440,7 +421,6 @@
     const dropdown = document.querySelector('.lang-dropdown');
     const currentLang = document.getElementById('current-lang');
     const options = dropdown.querySelector('.lang-options');
-    const langLabel = document.getElementById('lang-label');
     const btnMapBraga = document.getElementById("btn-map-braga"); 
     const menuToggler = document.getElementById('menu-toggler');
     const menuOptions = document.getElementById('menu-options');
@@ -511,7 +491,6 @@
 
       document.getElementById("btn-map-norte").innerHTML = `<i class="lni lni-download"></i> ${content.buttons.mapNorte}`;
 
-      langLabel.textContent = content.langLabel;
       currentLang.textContent = flagMap[lang];
       renderDropdown(lang);
       options.classList.remove('show');
